@@ -1,24 +1,21 @@
-
-
 #include <stdio.h>
 #include <stdlib.h>
-
 
 struct linkedList{
 	struct node *headPointer;
 	struct node *tailPointer;
-};
+}; //linkedList
 struct node{
     int dataInt;
     struct node* nextPointer;
-};
+}; //node
 
 struct linkedList* createLinkedList(){
     struct linkedList* newLinkedListPointer = (struct linkedList*)malloc(sizeof(struct linkedList));
     newLinkedListPointer->headPointer = NULL;
     newLinkedListPointer->tailPointer = NULL;
     return newLinkedListPointer;
-}
+} //createLinkedList()
 
 struct node* createNode(int data){
 	struct node* newNode = (struct node*)malloc(sizeof(struct node));
@@ -26,7 +23,7 @@ struct node* createNode(int data){
 	newNode->nextPointer = NULL;
 	// printf("Node created\n");
 	return newNode;
-}
+} //createNode()
 
 void addFirst(struct linkedList* list, int e){
 	struct node *newNodePointer = createNode(e);
@@ -36,7 +33,7 @@ void addFirst(struct linkedList* list, int e){
 	}
 	newNodePointer->nextPointer = list->headPointer;
 	list->headPointer = newNodePointer;
-}
+} //addFirst()
 
 void addLast(struct linkedList* list, int e){
 	struct node *newNodePointer = createNode(e);
@@ -46,7 +43,7 @@ void addLast(struct linkedList* list, int e){
 	}
 	newNodePointer->nextPointer = NULL;
 	list->tailPointer, list->tailPointer->nextPointer= newNodePointer;
-}
+} //addLast()
 
 void printList(struct linkedList* listPointer){
     struct node* currentPointer = listPointer->headPointer;
@@ -58,16 +55,31 @@ void printList(struct linkedList* listPointer){
         printf(", %d",currentPointer->dataInt);
         currentPointer = currentPointer->nextPointer;
     }
+    printf("\n");
     return;
+} //printList()
+
+struct node* search(struct linkedList* listPointer, int lookForInt){
+    struct node* currentPointer = listPointer->headPointer;
+    while(currentPointer!=NULL && currentPointer->dataInt!=lookForInt){
+        currentPointer = currentPointer->nextPointer;
+    }
+    return currentPointer;
 }
 
-int main()
-{
+int main(){
     struct linkedList* newLinkedListPointer = createLinkedList();
     addFirst(newLinkedListPointer,9);
     addFirst(newLinkedListPointer,7);
     addFirst(newLinkedListPointer,81);
     addLast(newLinkedListPointer,12);
     printList(newLinkedListPointer);
+    
+    if (search(newLinkedListPointer,12) == NULL){
+        printf("NULL");
+    }
+    else{
+        printf("Yayyyyy");
+    }
     return 0;
-}
+} //main()
