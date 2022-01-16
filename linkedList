@@ -1,0 +1,73 @@
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+
+struct linkedList{
+	struct node *headPointer;
+	struct node *tailPointer;
+};
+struct node{
+    int dataInt;
+    struct node* nextPointer;
+};
+
+struct linkedList* createLinkedList(){
+    struct linkedList* newLinkedListPointer = (struct linkedList*)malloc(sizeof(struct linkedList));
+    newLinkedListPointer->headPointer = NULL;
+    newLinkedListPointer->tailPointer = NULL;
+    return newLinkedListPointer;
+}
+
+struct node* createNode(int data){
+	struct node* newNode = (struct node*)malloc(sizeof(struct node));
+	newNode->dataInt = data;
+	newNode->nextPointer = NULL;
+	// printf("Node created\n");
+	return newNode;
+}
+
+void addFirst(struct linkedList* list, int e){
+	struct node *newNodePointer = createNode(e);
+	if(list->headPointer == NULL){
+		// printf("list.head is NUll in addFirst\n");
+		list->tailPointer = newNodePointer;
+	}
+	newNodePointer->nextPointer = list->headPointer;
+	list->headPointer = newNodePointer;
+}
+
+void addLast(struct linkedList* list, int e){
+	struct node *newNodePointer = createNode(e);
+	if(list->tailPointer == NULL){
+		// printf("list.head is NUll in addFirst\n");
+		list->headPointer = newNodePointer;
+	}
+	newNodePointer->nextPointer = NULL;
+	list->tailPointer, list->tailPointer->nextPointer= newNodePointer;
+}
+
+void printList(struct linkedList* listPointer){
+    struct node* currentPointer = listPointer->headPointer;
+    if(currentPointer!=NULL){
+        printf("%d",currentPointer->dataInt);
+        currentPointer = currentPointer->nextPointer;
+    }
+    while(currentPointer!=NULL){
+        printf(", %d",currentPointer->dataInt);
+        currentPointer = currentPointer->nextPointer;
+    }
+    return;
+}
+
+int main()
+{
+    struct linkedList* newLinkedListPointer = createLinkedList();
+    addFirst(newLinkedListPointer,9);
+    addFirst(newLinkedListPointer,7);
+    addFirst(newLinkedListPointer,81);
+    addLast(newLinkedListPointer,12);
+    printList(newLinkedListPointer);
+    return 0;
+}
