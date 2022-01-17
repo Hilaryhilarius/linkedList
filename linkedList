@@ -49,7 +49,16 @@ struct node* removeFirst(struct linkedList* listPointer){
     return oldHeadPointer;
 }
 
-
+struct node* removeLast(struct linkedList* listPointer){
+    struct node* currentPointer = listPointer->headPointer;
+    while(currentPointer->nextPointer->nextPointer != NULL){
+        currentPointer = currentPointer->nextPointer;
+    }
+    listPointer->tailPointer = currentPointer;
+    struct node* tempPointer = currentPointer->nextPointer;
+    currentPointer->nextPointer = NULL;
+    return tempPointer;
+}
 
 void printList(struct linkedList* listPointer){
     struct node* currentPointer = listPointer->headPointer;
