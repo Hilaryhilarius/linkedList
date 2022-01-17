@@ -37,10 +37,13 @@ void addFirst(struct linkedList* list, int e){
 
 void addLast(struct linkedList* list, int e){
 	struct node *newNodePointer = createNode(e);
-	if(list->tailPointer == NULL){
+	if(list->headPointer == NULL){
 		list->headPointer = newNodePointer;
 	}
-	list->tailPointer, list->tailPointer->nextPointer= newNodePointer;
+	else{
+	    list->tailPointer->nextPointer = newNodePointer;
+	}
+	list->tailPointer = newNodePointer;
 } //addLast()
 
 struct node* removeFirst(struct linkedList* listPointer){
@@ -59,6 +62,35 @@ struct node* removeLast(struct linkedList* listPointer){
     currentPointer->nextPointer = NULL;
     return tempPointer;
 }
+
+struct linkedList* mergeSortedLists(struct linkedList* list1Pointer, struct linkedList* list2Pointer){
+    struct node* currentPointer1 = list1Pointer->headPointer;
+    struct node* currentPointer2 = list2Pointer->headPointer;
+    struct linkedList* newList;
+    while(currentPointer1 != NULL && currentPointer2 != NULL){
+        if(currentPointer1<currentPointer2){
+            addLast(newList,currentPointer1->dataInt);
+            currentPointer1 = currentPointer1->nextPointer;
+        }//if
+        else{
+            addLast(newList,currentPointer2->dataInt);
+            currentPointer2 = currentPointer2->nextPointer;
+        }//else
+        if(currentPointer1==NULL){
+            while(currentPointer2!=NULL){
+                addLast(newList,currentPointer2->dataInt);
+                currentPointer2=currentPointer2->nextPointer;
+            }//while
+        }//if
+        else{
+            while(currentPointer1!=NULL){
+                addLast(newList,currentPointer1->dataInt);
+                currentPointer1=currentPointer1->nextPointer;
+            }//while
+        }//else
+    }//while
+    return newList;
+}//mergeSortedLists()
 
 void printList(struct linkedList* listPointer){
     struct node* currentPointer = listPointer->headPointer;
@@ -83,19 +115,21 @@ struct node* search(struct linkedList* listPointer, int lookForInt){
 }
 
 int main(){
-    struct linkedList* newLinkedListPointer = createLinkedList();
-    addFirst(newLinkedListPointer,9);
-    addFirst(newLinkedListPointer,7);
-    addFirst(newLinkedListPointer,81);
-    addLast(newLinkedListPointer,12);
-    removeFirst(newLinkedListPointer);
-    printList(newLinkedListPointer);
+    struct linkedList* newLinkedListPointer1 = createLinkedList();
+    addLast(newLinkedListPointer1,1);
+    addLast(newLinkedListPointer1,7);
+    addLast(newLinkedListPointer1,81);
+    addLast(newLinkedListPointer1,96);
+    printList(newLinkedListPointer1);
     
-    if (search(newLinkedListPointer,12) == NULL){
-        printf("NULL");
-    }
-    else{
-        printf("Yayyyyy");
-    }
-    return 0;
+    struct linkedList* newLinkedListPointer2 = createLinkedList();
+    addLast(newLinkedListPointer2,9);
+    addLast(newLinkedListPointer2,18);
+    addLast(newLinkedListPointer2,32);
+    addLast(newLinkedListPointer2,122);
+    printList(newLinkedListPointer2);
+    
+    
+    mergeSortedLists(newLinkedListPointer1, newLinkedListPointer2);
+
 } //main()
