@@ -38,12 +38,18 @@ void addFirst(struct linkedList* list, int e){
 void addLast(struct linkedList* list, int e){
 	struct node *newNodePointer = createNode(e);
 	if(list->tailPointer == NULL){
-		// printf("list.head is NUll in addFirst\n");
 		list->headPointer = newNodePointer;
 	}
-	newNodePointer->nextPointer = NULL;
 	list->tailPointer, list->tailPointer->nextPointer= newNodePointer;
 } //addLast()
+
+struct node* removeFirst(struct linkedList* listPointer){
+    struct node* oldHeadPointer = listPointer->headPointer;
+    listPointer->headPointer = listPointer->headPointer->nextPointer;
+    return oldHeadPointer;
+}
+
+
 
 void printList(struct linkedList* listPointer){
     struct node* currentPointer = listPointer->headPointer;
@@ -73,6 +79,7 @@ int main(){
     addFirst(newLinkedListPointer,7);
     addFirst(newLinkedListPointer,81);
     addLast(newLinkedListPointer,12);
+    removeFirst(newLinkedListPointer);
     printList(newLinkedListPointer);
     
     if (search(newLinkedListPointer,12) == NULL){
